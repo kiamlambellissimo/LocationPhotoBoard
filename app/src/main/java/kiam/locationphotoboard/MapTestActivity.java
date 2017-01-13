@@ -16,4 +16,5 @@ public class MapTestActivity extends AppCompatActivity
         setContentView(R.layout.activity_maps);
     }
 
+
 }
