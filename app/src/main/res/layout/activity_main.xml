@@ -84,4 +84,16 @@
         android:layout_above="@+id/ITGAnalogClock"
         android:layout_alignLeft="@+id/ITGAnalogClock"
         android:layout_alignStart="@+id/ITGAnalogClock"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Welcome"
+        android:ems="10"
+        android:id="@+id/tvWelcomeMessage"
+        android:layout_below="@+id/uiActivityButton"
+        android:layout_toLeftOf="@+id/uiActivityButton"
+        android:layout_toStartOf="@+id/uiActivityButton"
+        android:layout_marginTop="60dp" />
 </RelativeLayout>

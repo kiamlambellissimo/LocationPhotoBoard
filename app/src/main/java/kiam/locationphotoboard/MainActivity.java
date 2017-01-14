@@ -10,6 +10,11 @@ import butterknife.Bind;
 
 public class MainActivity extends AppCompatActivity
 {
+
+    final EditTest etName = (EditText) findViewById(R.id.etName);
+    final EditTest etAge = (EditText) findViewById(R.id.etAge);
+    final TextView welcomeMessage = (TextView) findViewById(R.id.tvWelcomeMessage);
+
     @Bind(R.id.mapActivityButton)
     Button mMapsActivityButton;
 
