@@ -33,16 +33,17 @@ public class Post
 
     private int Rating;
     private ArrayList<String> Comments;
+    private String textContent;
+    private Date theDate;
 
     // Text post route and Initialization of Content
     public Post(String textPost)
     {
-        Date theDate = new Date(); //the date of the moment of uploading
-        testString(textPost); //Limit message to 100 characters, if greater, return error on app.
+        testString(textPost);   //Limit message to 100 characters, if greater, return error on app.
 
         // Initialization of (1)
-        Rating = 0; //Initialization of Rating
-        Comments = new ArrayList<String>(); //Initialization of the post's comments.
+        Rating = 0;     //Initialization of Rating
+        Comments = new ArrayList<String>();     //Initialization of the post's comments.
 
     }
 
@@ -72,13 +73,32 @@ public class Post
     //returns the rating
     public int getRating(){return Rating;}
 
-    /*
-     * The Great Limiter
-     * */
-    public static boolean testString(String s)
+    //returns the Text for posting
+    public String getTextContent()
     {
-        return s.length() > 100;
+        return textContent;
     }
 
+    //returns the date
+    public Date getDate()
+    {
+        return theDate;
+    }
+
+    /*
+     * The Great Limiters
+     * */
+    private void testString(String s)
+    {
+        if (s.length() < 100)
+        {
+            textContent = s; //if < 100 chars, allow setting of content.
+            theDate = new Date();
+        }
+        else
+        {
+            textContent = "MESSAGE TOO LONG";
+        }
+    }
 
 }

@@ -10,4 +10,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kiam.locationphotoboard.ObjectStructureActivity">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/putpost"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:hint="enter text you want to post" />
+
+    <Button
+        android:text="Add Text Post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/putpost"
+        android:layout_alignRight="@+id/putpost"
+        android:layout_alignEnd="@+id/putpost"
+        android:layout_marginTop="62dp"
+        android:id="@+id/addtotext" />
+
+    <TextView
+        android:text="Text Post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textpost"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/theDate"
+        android:layout_alignLeft="@+id/theDate"
+        android:layout_alignStart="@+id/theDate"
+        android:id="@+id/rating" />
+
+    <EditText
+        android:text="Comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/comments"
+        android:layout_below="@+id/rating"
+        android:layout_alignRight="@+id/addtotext"
+        android:layout_alignEnd="@+id/addtotext" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/theDate"
+        android:layout_below="@+id/textpost"
+        android:layout_alignLeft="@+id/comments"
+        android:layout_alignStart="@+id/comments" />
 </RelativeLayout>
