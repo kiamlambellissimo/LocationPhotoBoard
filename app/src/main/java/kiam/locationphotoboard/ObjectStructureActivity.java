@@ -68,11 +68,28 @@ public class ObjectStructureActivity extends AppCompatActivity {
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allowance == 0 || allowance == 2) {
+                if (allowance == 0) {
                     theContent.addRating();
                     theRating.setText(Integer.toString(theContent.getRating()));
                     allowance = 1; //the check to only allow 1 up or down vote
-                } else {
+                }
+
+                else if(allowance == 2)
+                {
+                    theContent.addRating();
+                    theContent.addRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 1; //the check to only allow 1 up or down vote
+                }
+
+                else if(allowance == 1)
+                {
+                    theContent.subRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 0;
+                }
+
+                else {
                     theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                 }
             }
@@ -81,11 +98,29 @@ public class ObjectStructureActivity extends AppCompatActivity {
         downButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allowance == 1 || allowance == 0) {
+                if (allowance == 0) {
                     theContent.subRating();
                     theRating.setText(Integer.toString(theContent.getRating()));
                     allowance = 2; //the check to only allow 1 up or down vote
-                } else {
+
+                }
+
+                else if (allowance == 1)
+                {
+                    theContent.subRating();
+                    theContent.subRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 2; //the check to only allow 1 up or down vote
+                }
+
+                else if(allowance == 2)
+                {
+                    theContent.addRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 0;
+                }
+
+                else {
                     theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                 }
             }
