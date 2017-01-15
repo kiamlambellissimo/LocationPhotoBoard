@@ -1,6 +1,10 @@
 package kiam.locationphotoboard;
 
+<<<<<<< HEAD
 //import java.awt.Image;
+=======
+//import java.awt.Image; --what's the image thing?
+>>>>>>> master
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,6 +20,7 @@ import java.util.Date;
  * */
 
 public class Post {
+<<<<<<< HEAD
  /*
   * 	Upon initialization of the post, (which happens as soon as the user presses
   * 	triggers the instantiation withtin the phone app) the following
@@ -51,6 +56,44 @@ public class Post {
     //        Rating = 0;
     //        Comments = new ArrayList<String>();
     //    }
+=======
+	/*
+	 * 	Upon initialization of the Post (which happens as soon as the user presses
+	 * 	a button triggering the instantiation withtin the phone app) the following
+	 * 	happens:
+	 *
+	 * 	i) 'theDate' Object is instantiated with the current date
+	 * 	ii) everything within (1) and (2) are initialized to empty; except the Content
+	 * 		itself
+	 *
+	 * 	There exists 2 constructors for the initialization, one for an image post and
+	 * 	another for 'text posts' --put in for testing before images, maybe keep??
+	 *
+	 * */
+
+    private int Rating;
+    private ArrayList<String> Comments;
+
+    // Text post route and Initialization of Content
+    public Post(String textPost) {
+        Date theDate = new Date(); //the date of the moment of uploading
+        testString(textPost); //Limit message to 100 characters, if greater, return error on app.
+
+        // Initialization of (1)
+        Rating = 0; //Initialization of Rating
+        Comments = new ArrayList<String>(); //Initialization of the post's comments.
+
+    }
+
+    //TODO: Initialize image route -- will contain check for size (phone standard), if someone uploads
+    // a camera res photo it will be dumbed down to phone standard resolution
+    /*public Post(Image imagePost) {
+        Date theDate = new Date();
+        Rating = 0;
+        Comments = new ArrayList<String>();
+    }*/
+
+>>>>>>> master
 
     //adding comments
     public void addToComments(String comment) {
@@ -58,14 +101,24 @@ public class Post {
     }
 
     //returns the comment array
+<<<<<<< HEAD
     public ArrayList < String > getComments() {
         return Comments;
     } //TODO: figure out if AndStd can use ArrayLists easily
+=======
+    public ArrayList<String> getComments() {
+        return Comments;
+    } //TODO: figure out if Android Studio can use ArrayLists easily
+>>>>>>> master
 
     // add/sub to the rating
     public void addRating() {
         Rating++;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     public void subRating() {
         Rating--;
     }
@@ -75,6 +128,7 @@ public class Post {
         return Rating;
     }
 
+<<<<<<< HEAD
     //returns the Text for posting
     public String getTextContent() {
         return textContent;
@@ -98,3 +152,13 @@ public class Post {
     }
 
 }
+=======
+    /*
+     * The Great Limiter
+     * */
+    public static boolean testString(String s) {
+        return s.length() > 100;
+    }
+
+}
+>>>>>>> master
