@@ -10,16 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kiam.locationphotoboard.ObjectStructureActivity">
 
-    <Button
-        android:text="Add Text Post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/putpost"
-        android:layout_alignRight="@+id/putpost"
-        android:layout_alignEnd="@+id/putpost"
-        android:layout_marginTop="62dp"
-        android:id="@+id/addtotext" />
-
     <TextView
         android:text="Rating"
         android:layout_width="wrap_content"
@@ -48,24 +38,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp" />
 
-    <Button
-        android:text="Up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_below="@+id/rating"
-        android:layout_toLeftOf="@+id/addtotext"
-        android:layout_toStartOf="@+id/addtotext" />
-
-    <Button
-        android:text="Down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button"
-        android:layout_alignRight="@+id/addtotext"
-        android:layout_alignEnd="@+id/addtotext"
-        android:id="@+id/button2" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,19 +50,41 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Comments"
+    <Button
+        android:text="Add Text Post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/comments"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="82dp" />
+        android:layout_marginTop="19dp"
+        android:id="@+id/addtotext"
+        android:layout_below="@+id/putpost"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/up"
+        android:layout_below="@+id/rating"
+        android:layout_alignLeft="@+id/rating"
+        android:layout_alignStart="@+id/rating" />
+
+    <Button
+        android:text="Down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/down"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/entercomment"
+        android:layout_alignEnd="@+id/entercomment" />
+
+    <Button
+        android:text="POST COMMENT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postcomment"
+        android:layout_below="@+id/entercomment"
+        android:layout_alignLeft="@+id/addtotext"
+        android:layout_alignStart="@+id/addtotext" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -99,19 +93,23 @@
         android:text=""
         android:hint="enter your comment"
         android:ems="10"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/comments"
-        android:layout_alignStart="@+id/comments"
-        android:layout_marginTop="29dp"
-        android:id="@+id/editText" />
+        android:layout_marginTop="10dp"
+        android:id="@+id/entercomment"
+        android:layout_below="@+id/up"
+        android:layout_alignLeft="@+id/up"
+        android:layout_alignStart="@+id/up" />
 
-    <Button
-        android:text="POST COMMENT"
+    <TextView
+        android:text="Comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText"
-        android:layout_toRightOf="@+id/comments"
-        android:layout_toEndOf="@+id/comments"
-        android:id="@+id/button3" />
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/comments"
+        android:layout_below="@+id/postcomment"
+        android:layout_alignRight="@+id/addtotext"
+        android:layout_alignEnd="@+id/addtotext"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
 
 </RelativeLayout>
