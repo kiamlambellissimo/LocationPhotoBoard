@@ -32,7 +32,7 @@ public class Post
 	 * */
 
     private int Rating;
-    private ArrayList<String> Comments;
+    private ArrayList<Post> Comments;
     private String textContent;
     private Date theDate;
 
@@ -41,7 +41,7 @@ public class Post
     {
         // Initialization of (1)
         Rating = 0;     //Initialization of Rating
-        Comments = new ArrayList<String>();     //Initialization of the post's comments.
+        Comments = new ArrayList<Post>();     //Initialization of the post's comments.
 
     }
 
@@ -55,13 +55,13 @@ public class Post
 //    }
 
     //adding comments
-    public void addToComments(String comment)
+    public void addToComments(Post comment)
     {
         Comments.add(comment);
     }
 
     //returns the comment array
-    public ArrayList<String> getComments() {return Comments;} //TODO: figure out if AndStd can use ArrayLists easily
+    public ArrayList<Post> getComments() {return Comments;} //TODO: figure out if AndStd can use ArrayLists easily
 
     // add/sub to the rating
     public void addRating(){Rating++;}

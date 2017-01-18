@@ -17,6 +17,9 @@ public class ObjectStructureActivity extends AppCompatActivity {
 
     private int allowance;
     private Post theContent;
+    private Post comment;
+    private boolean goodLength;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,8 @@ public class ObjectStructureActivity extends AppCompatActivity {
         allowance = 0;
 
         theContent = new Post();
+        comment = new Post();
+        goodLength = true;
 
         //idk what i'm doing, does this let you use the things?
         final Button addtotext = (Button) findViewById(R.id.addtotext); //button to add to the post
@@ -54,43 +59,39 @@ public class ObjectStructureActivity extends AppCompatActivity {
 
                 //sets the date of the post
                 //janky way to test if the message is too long, don't put a date out.
-                if (!thePost.getText().equals("MESSAGE TOO LONG"))
+                if (!thePost.getText().equals("MESSAGE TOO LONG")) {
                     theDate.setText(theContent.getDate().toString());
+                }
 
-                //initialize rating display to 0
-                theRating.setText("0");
-
+                else {
+                    //initialize rating display to 0
+                    theRating.setText("0");
+                    goodLength = false;
+                }
             }
-
         });
 
         //rating system: (can only up or down vote once)
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allowance == 0) {
-                    theContent.addRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 1; //the check to only allow 1 up or down vote
-                }
-
-                else if(allowance == 2)
-                {
-                    theContent.addRating();
-                    theContent.addRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 1; //the check to only allow 1 up or down vote
-                }
-
-                else if(allowance == 1)
-                {
-                    theContent.subRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 0;
-                }
-
-                else {
-                    theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                if (goodLength) {
+                    if (allowance == 0) {
+                        theContent.addRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 1; //the check to only allow 1 up or down vote
+                    } else if (allowance == 2) {
+                        theContent.addRating();
+                        theContent.addRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 1; //the check to only allow 1 up or down vote
+                    } else if (allowance == 1) {
+                        theContent.subRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 0;
+                    } else {
+                        theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                    }
                 }
             }
         });
@@ -98,37 +99,40 @@ public class ObjectStructureActivity extends AppCompatActivity {
         downButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allowance == 0) {
-                    theContent.subRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 2; //the check to only allow 1 up or down vote
+                if (goodLength) {
+                    if (allowance == 0) {
+                        theContent.subRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 2; //the check to only allow 1 up or down vote
 
-                }
-
-                else if (allowance == 1)
-                {
-                    theContent.subRating();
-                    theContent.subRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 2; //the check to only allow 1 up or down vote
-                }
-
-                else if(allowance == 2)
-                {
-                    theContent.addRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 0;
-                }
-
-                else {
-                    theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                    } else if (allowance == 1) {
+                        theContent.subRating();
+                        theContent.subRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 2; //the check to only allow 1 up or down vote
+                    } else if (allowance == 2) {
+                        theContent.addRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 0;
+                    } else {
+                        theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                    }
                 }
             }
         });
 
+        addToComments.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+
+                comment.testString(putComment.getText().toString());
+                comment.addToComments(comment);
+                for (Post p : comment.getComments())
+                {
+                    theComments.setText(p.getTextContent());
+                }
+            }
+        });
     }
-
-
-
 }
