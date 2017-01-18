@@ -11,4 +11,11 @@
         android:text="do map stuff here"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:text="8==D"
+        android:layout_width="383dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3" />
+
 </LinearLayout>
