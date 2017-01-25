@@ -13,9 +13,18 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
-        android:text="8==D"
-        android:layout_width="383dp"
+        android:text="Maps"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"/>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
 </LinearLayout>
