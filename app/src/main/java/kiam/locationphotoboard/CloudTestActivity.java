@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.backendless.Backendless;
 import com.backendless.Persistence;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 public class CloudTestActivity extends AppCompatActivity
 {
@@ -23,6 +25,23 @@ public class CloudTestActivity extends AppCompatActivity
         final Post testPost = new Post();
         testPost.testString("The Post.");
 
+
+        Backendless.Persistence.save(testPost, new AsyncCallback<Post>()
+        {
+
+            //Connecting to the internet is giving me issues. Seems like it might be an issue with Samsung. Will test with other device.
+            @Override
+            public void handleResponse(Post post)
+            {
+                Log.d(TAG, "It worked");
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault)
+            {
+                Log.d(TAG, "It didn't work");
+            }
+        });
 
 
        /* Thread t = new Thread(new Runnable()
