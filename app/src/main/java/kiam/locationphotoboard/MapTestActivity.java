@@ -30,7 +30,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     final String MAPS_API_KEY = "AIzaSyBrBtIogaQ2lklgpqhAc3XXmEOqXdI_U4s";
     private GoogleMap mMap;
     private GoogleApiClient GAC;
-    //private Post p;
+    private Post p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
