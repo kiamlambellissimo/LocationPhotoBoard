@@ -9,7 +9,7 @@ import android.util.Log;
 public class MapTestActivity extends Activity implements OnMapReadyCallback {
 
     final String TAG = "MapTestActivity";
-    final String MAPS_API_KEY = "AIzaSyB1L-ENT2ZdVKYJWZNNYqm-IQAgv0BcSh4";
+    final String MAPS_API_KEY = "AIzaSyBrBtIogaQ2lklgpqhAc3XXmEOqXdI_U4s";
     private GoogleMap mMap;
 
     @Override
