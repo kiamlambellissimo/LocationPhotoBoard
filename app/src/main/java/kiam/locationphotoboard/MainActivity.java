@@ -26,11 +26,19 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.uiActivityButton)
     Button mUIActivityButton;
 
+    @Bind(R.id.registerActivityButton)
+    Button mRegisterActivityButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void toRegisterActivity(View view){
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
     }
 
     public void toMapsActivity(View view){
@@ -57,4 +65,7 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(this, ObjectStructureActivity.class);
         startActivity(i);
     }
+
+
+
 }

@@ -31,8 +31,19 @@ public class Post
 	 *
 	 * */
 
-    private int Rating;
-    private ArrayList<Post> Comments;
+
+    private int mRating;
+
+    public void setRating(int rating)
+    {
+        mRating = rating;
+    }
+
+    public int getRating()
+    {
+        return mRating;
+    }
+    /*private ArrayList<Post> Comments;
     private String textContent;
     private Date theDate;
 
@@ -84,7 +95,7 @@ public class Post
 
     /*
      * The Great Limiters
-     * */
+     *
     public void testString(String s)
     {
         if (s.length() < 100)
@@ -97,5 +108,6 @@ public class Post
             textContent = "MESSAGE TOO LONG";
         }
     }
+    */
 
 }

@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.backendless.Backendless;
 import com.backendless.Persistence;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 public class CloudTestActivity extends AppCompatActivity
 {
@@ -21,19 +23,41 @@ public class CloudTestActivity extends AppCompatActivity
     public void saveNewPost(View view)
     {
         final Post testPost = new Post();
-        testPost.testString("The Post.");
+        testPost.setRating(5);
 
+        Backendless.Persistence.save(testPost, new AsyncCallback<Post>() {
+            @Override
+            public void handleResponse(Post post) {
+                Log.d(TAG, "works");
+            }
 
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.d(TAG, "didnt work");
+            }
+        });
 
-       /* Thread t = new Thread(new Runnable()
+        /*Thread t = new Thread(new Runnable()
         {
             @Override
             public void run()
             {
+
                 Log.d(TAG, "saveNewPost");
                 try {
                     Log.d(TAG, "New Post Saved");
+
+
                     Post savedPost =  Backendless.Persistence.save(testPost);
+                   *//* PostManager.saveEntity( testPost, CloudTestActivity.this, new InnerCallBack<Post>()
+                    {
+                        @Override
+                        public void handleResponse( Post response )
+                        {
+                          Log.d(TAG, "worked!");
+                        }
+                    } );
+                    *//*
                 } catch (Exception e) {
                     Log.d(TAG, "New Post Failed");
                     e.printStackTrace();

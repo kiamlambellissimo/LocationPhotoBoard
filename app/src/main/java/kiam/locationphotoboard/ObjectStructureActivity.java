@@ -20,7 +20,7 @@ public class ObjectStructureActivity extends AppCompatActivity {
     private Post comment;
     private boolean goodLength;
 
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,5 +134,6 @@ public class ObjectStructureActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+        */
+    //}
 }
