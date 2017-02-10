@@ -25,6 +25,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
+
     private String mLatitudeText;
     private String mLongitudeText;
     private FusedLocationProviderApi locationProvider;
@@ -75,9 +76,11 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         {
             Log.d(TAG, "No permissons");
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 13));
+        LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-        mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+
+       // mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
     }
 
     @Override
@@ -87,9 +90,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
         //gets last location of user
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        mMap.setMyLocationEnabled(true);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
         /*if (mLastLocation != null) {
             mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
