@@ -15,7 +15,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
+//implements OnMapReadyCallback, ConnectionCallback and OnConnectionFailedListener
+//ConnectionCallback provides callbacks when user is connected/disconnected
+//OnConnectionFailedListener provides callbacks when a failed connection attempt is made by the client to the server
 public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     final String TAG = "MapTestActivity";
@@ -35,11 +37,13 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        //creates a mapfragment
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        //This statement basically lets us access GoogleApiClient and that allows us to do things like
+        // let us have callbacks that let us use methods that tell the user if they are
+        // connected/disconnected/suspended etc.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
@@ -48,12 +52,13 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                     .build();
         }
     }
-
+    //Connects the user to the GoogleApiClient on start
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
     }
 
+    //Disconnects the user from the GoogleApiClient after closing
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
@@ -77,9 +82,11 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+       //Asks the user for permission to use the GPS
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
+        //gets last location of user
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         /*if (mLastLocation != null) {
             mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -87,44 +94,15 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         }**/
 
     }
-
+    //needs to be implemented but this is where we throw stuff if the connection is suspended
     @Override
     public void onConnectionSuspended(int i) {
 
     }
-
+    //needs to be implemented but this is where we throw stuff if the connection failed
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }
 
-/*
-
-package kiam.locationphotoboard;
-
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-/**
- * Created by Kiam on 2017-01-12.
- */
-/*
-public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback{}
-{
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-    }
-
-
-
-
-}
-*/
