@@ -68,16 +68,16 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        LatLng sydney = new LatLng(-33.867, 151.206);
+        LatLng toronto = new LatLng(43.6532, 79.3832);
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e)
         {
             Log.d(TAG, "No permissons");
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 13));
 
-        mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(sydney));
+        mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
     }
 
     @Override
