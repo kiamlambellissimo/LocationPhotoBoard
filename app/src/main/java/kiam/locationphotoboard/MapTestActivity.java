@@ -88,6 +88,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         }
         //gets last location of user
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
         /*if (mLastLocation != null) {
             mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
