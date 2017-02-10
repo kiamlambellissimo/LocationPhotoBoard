@@ -24,19 +24,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     final String TAG = "MapTestActivity";
     final String MAPS_API_KEY = "AIzaSyBrBtIogaQ2lklgpqhAc3XXmEOqXdI_U4s";
     private GoogleMap mMap;
     private GoogleApiClient GAC;
     private Post p;
+    private Marker testMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Connects to activity_maps.xml
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        //creates the space (fragment) that the map will sit in
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -44,32 +48,45 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
     @Override
     public void onMapReady(GoogleMap map) {
+        //instantiapes the map and a test post.
         mMap = map;
-        //p = new Post("Test");
+        p = new Post();
+
+        //sets the location arbitrarily to sydney
         LatLng sydney = new LatLng(-33.867, 151.206);
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e)
         {
             Log.d(TAG, "No permissons");
-        }        mMap.addMarker(new MarkerOptions()
-                        .title("Sydney")
-                        .snippet("Click here to see a Post!")
-                        .position(sydney));
-                        //.setTag());
-                mMap.setOnMarkerClickListener(this);
+        }
 
+        //adds a test marker
+        testMarker = map.addMarker(new MarkerOptions()
+                .title("test")
+                .position(sydney)
+                .snippet("before test post")
+        );
 
+        //sets the tag object accossiated with the marker to an arbitrary string
+        testMarker.setTag("test post");
+
+        //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
+        mMap.setOnMarkerClickListener(this);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
     }
 
 
+
+    //excecutes when a marker is clicked. returns that marker.
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        //marker.set
+
+        //gets the object associated with that marker.
+        Log.d(TAG,(String) marker.getTag());
+
 
         return false;
     }
