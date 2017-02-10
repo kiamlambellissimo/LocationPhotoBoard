@@ -17,6 +17,19 @@ import java.util.Date;
 
 public class Post
 {
+
+    private String name;
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
 	/*
 	 * 	Upon initialization of the post, (which happens as soon as the user presses
 	 * 	triggers the instantiation withtin the phone app) the following
@@ -30,7 +43,7 @@ public class Post
 	 * 	another for 'text posts' --put in for testing before images, maybe keep??
 	 *
 	 * */
-
+    /*
     private int Rating;
     private ArrayList<Post> Comments;
     private String textContent;
@@ -84,7 +97,7 @@ public class Post
 
     /*
      * The Great Limiters
-     * */
+     *
     public void testString(String s)
     {
         if (s.length() < 100)
@@ -97,5 +110,5 @@ public class Post
             textContent = "MESSAGE TOO LONG";
         }
     }
-
+    */
 }

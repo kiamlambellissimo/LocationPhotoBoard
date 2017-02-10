@@ -10,14 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kiam.locationphotoboard.CloudTestActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
     <Button
         android:text="SAVE THE POST"
         android:layout_width="wrap_content"
@@ -28,5 +20,36 @@
         android:layout_marginLeft="115dp"
         android:layout_marginStart="115dp"
         android:layout_marginTop="142dp"
-        android:id="@+id/savePost" />
+        android:id="@+id/savePostButton"
+        android:onClick="saveNewPost"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Image"
+        android:id="@+id/imageButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="selectImage"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setIDField"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="93dp"
+        android:layout_alignRight="@+id/savePostButton"
+        android:layout_alignEnd="@+id/savePostButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set ID"
+        android:id="@+id/setIDButton"
+        android:layout_alignBottom="@+id/setIDField"
+        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton"
+        android:onClick="setPostID"/>
 </RelativeLayout>

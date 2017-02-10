@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Bind;
 
 public class ObjectStructureActivity extends AppCompatActivity {
-
+    /*
     private int allowance;
     private Post theContent;
     private Post comment;
@@ -135,4 +135,5 @@ public class ObjectStructureActivity extends AppCompatActivity {
             }
         });
     }
+    */
 }
