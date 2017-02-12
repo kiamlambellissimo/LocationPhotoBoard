@@ -26,8 +26,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
 
-    private String mLatitudeText;
-    private String mLongitudeText;
+    public String mLatitudeText;
+    public String mLongitudeText;
     private FusedLocationProviderApi locationProvider;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
 
@@ -69,16 +69,14 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        LatLng toronto = new LatLng(43.6532, 79.3832);
+
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e)
         {
             Log.d(TAG, "No permissons");
         }
-        LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
        // mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
     }
@@ -92,11 +90,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         //gets last location of user
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-
-        /*if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }**/
+        LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+        if (mLastLocation != null) {
+            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
+        }
 
     }
     //needs to be implemented but this is where we throw stuff if the connection is suspended
