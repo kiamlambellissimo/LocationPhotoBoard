@@ -51,7 +51,6 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
         mThumbnail.setVisibility(View.INVISIBLE);
-        flag = 0;
     }
 
     @Override
@@ -86,7 +85,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
         //sets the tag object accossiated with the marker to an arbitrary string
         testMarker.setTag("test post");
-        testMarker2.setTag("a different post");
+        testMarker2.setTag("fuk this gay earth");
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -108,43 +107,22 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        //gets the object associated with that marker.
+        //gets the object associated with that marker and turns on the thumbnail
         if (marker.getTag() != null)
         {
             mThumbnail.setText(marker.getTag().toString());
             mThumbnail.setVisibility(View.VISIBLE);
         }
+
+        //NOTE TO SELF: checking if the post is visable and then turning it invisible overwrites what just happened above
+        //              checking if the most is the same tag is useless because each time a marker is clicked theat tag is sent anyway
+        //that shit down there does not work
+//        if (mThumbnail.getText().equals(marker.getTag().toString()) && mThumbnail.getVisibility() == View.VISIBLE)
+//        {
+//            mThumbnail.setVisibility(View.INVISIBLE);
+//        }
+
         Log.d(TAG,(String) marker.getTag());
         return false;
     }
 }
-
-/*
-
-package kiam.locationphotoboard;
-
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-/**
- * Created by Kiam on 2017-01-12.
- */
-/*
-public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback{}
-{
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-    }
-
-
-
-
-}
-*/
