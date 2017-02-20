@@ -21,6 +21,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -31,7 +33,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private GoogleMap mMap;
     private GoogleApiClient GAC;
     private Post p;
-    private Marker testMarker;
+    private int flag;
+    private Marker testMarker, testMarker2;
+    protected TextView mThumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,10 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mThumbnail = (TextView) findViewById(R.id.thumbnail);
+        mThumbnail.setVisibility(View.INVISIBLE);
+        flag = 0;
     }
 
     @Override
@@ -54,6 +62,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
         //sets the location arbitrarily to sydney
         LatLng sydney = new LatLng(-33.867, 151.206);
+        LatLng sydney2 = new LatLng(-33.860, 151.150);
+
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e)
@@ -68,26 +78,43 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 .snippet("before test post")
         );
 
+        testMarker2 = map.addMarker(new MarkerOptions()
+                .title("test2")
+                .position(sydney2)
+                .snippet("test numero dux")
+        );
+
         //sets the tag object accossiated with the marker to an arbitrary string
         testMarker.setTag("test post");
+        testMarker2.setTag("a different post");
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
-
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-    }
 
+        //displays text only when the marker is clicked, else it will hide it again
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (mThumbnail.getVisibility() == View.VISIBLE) {
+                    mThumbnail.setVisibility(View.INVISIBLE);}
+            }
+        });
+
+    }
 
 
     //excecutes when a marker is clicked. returns that marker.
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-
         //gets the object associated with that marker.
+        if (marker.getTag() != null)
+        {
+            mThumbnail.setText(marker.getTag().toString());
+            mThumbnail.setVisibility(View.VISIBLE);
+        }
         Log.d(TAG,(String) marker.getTag());
-
-
         return false;
     }
 }
