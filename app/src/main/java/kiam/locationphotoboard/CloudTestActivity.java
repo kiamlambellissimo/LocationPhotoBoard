@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.Bind;
 
@@ -40,6 +42,9 @@ public class CloudTestActivity extends AppCompatActivity
     //@Bind(R.id.setIDField)
     EditText mSetIDField;
 
+    @Bind(R.id.cameraIntentButton)
+    Button mCameraIntentButton;
+
 
 
     final String YOUR_APP_ID = "A008628F-CA21-B27B-FFB9-3F872AB77900";
@@ -47,8 +52,12 @@ public class CloudTestActivity extends AppCompatActivity
     final String appVersion = "v1";
     final String TAG = "CloudTestActivity";
 
+    final int SELECT_IMAGE_INTENT = 100;
+    final int CAMERA_IMAGE_INTENT = 101;
+
     String mPostID;
     Bitmap mImage;
+    String mImagePath;
 
 
 
@@ -108,11 +117,35 @@ public class CloudTestActivity extends AppCompatActivity
         Backendless.Files.Android.upload(mImage, Bitmap.CompressFormat.JPEG, 100, mPostID, "media", responder);
     }
 
+    public void launchCameraIntent(View view)
+    {
+        Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (pictureIntent.resolveActivity(getPackageManager()) != null)
+        {
+            File image = null;
+            File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            try {
+                image = File.createTempFile(mPostID, ".JPG", fileDir);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (image != null)
+            {
+                Log.d(TAG, image.getAbsolutePath());
+                Uri photoUri = Uri.fromFile(image);
+                mImagePath = image.getPath();
+                pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(pictureIntent, CAMERA_IMAGE_INTENT);
+            }
+        }
+    }
+
     public void selectImage(View view)
     {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         i.setType("image/*");
-        startActivityForResult(i, 100);
+        startActivityForResult(i, SELECT_IMAGE_INTENT);
     }
 
     public void setPostID(View view)
@@ -125,13 +158,26 @@ public class CloudTestActivity extends AppCompatActivity
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (resultCode == RESULT_OK)
+        if (requestCode == SELECT_IMAGE_INTENT)
         {
-            try {
-                final Uri imageUri = data.getData();
-                mImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-            } catch(Exception e) { e.printStackTrace();}
+            if (resultCode == RESULT_OK) {
+                try {
+                    final Uri imageUri = data.getData();
+                    mImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        }
+
+        if (requestCode == CAMERA_IMAGE_INTENT)
+        {
+            /*Bundle extras = data.getExtras();
+            Bitmap thumbnail = (Bitmap) extras.get("data");
+            mImage = thumbnail;*/
+
+            mImage = BitmapFactory.decodeFile(mImagePath);
         }
     }
 }

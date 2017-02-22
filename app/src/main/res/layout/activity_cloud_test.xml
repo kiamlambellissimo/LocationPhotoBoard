@@ -28,9 +28,10 @@
         android:layout_height="wrap_content"
         android:text="Select Image"
         android:id="@+id/imageButton"
+        android:onClick="selectImage"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="selectImage"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -48,8 +49,18 @@
         android:layout_height="wrap_content"
         android:text="Set ID"
         android:id="@+id/setIDButton"
+        android:onClick="setPostID"
         android:layout_alignBottom="@+id/setIDField"
-        android:layout_toRightOf="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton"
-        android:onClick="setPostID"/>
+        android:layout_toRightOf="@+id/setIDField"
+        android:layout_toEndOf="@+id/setIDField"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera Intent"
+        android:id="@+id/cameraIntentButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="launchCameraIntent"/>
 </RelativeLayout>
