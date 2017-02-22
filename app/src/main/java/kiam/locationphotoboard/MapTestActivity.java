@@ -2,73 +2,66 @@ package kiam.locationphotoboard;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+
+import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-//implements OnMapReadyCallback, ConnectionCallback and OnConnectionFailedListener
-//ConnectionCallback provides callbacks when user is connected/disconnected
-//OnConnectionFailedListener provides callbacks when a failed connection attempt is made by the client to the server
-public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     final String TAG = "MapTestActivity";
     final String MAPS_API_KEY = "AIzaSyBrBtIogaQ2lklgpqhAc3XXmEOqXdI_U4s";
     private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient;
-    protected Location mLastLocation;
-
-    public String mLatitudeText;
-    public String mLongitudeText;
-    private FusedLocationProviderApi locationProvider;
-    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
-
-    public MapTestActivity() {
-    }
+    private GoogleApiClient GAC;
+    private Post p;
+    private int flag;
+    private Marker testMarker, testMarker2;
+    protected TextView mThumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Connects to activity_maps.xml
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        //creates a mapfragment
+
+        //creates the space (fragment) that the map will sit in
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //This statement basically lets us access GoogleApiClient and that allows us to do things like
-        // let us have callbacks that let us use methods that tell the user if they are
-        // connected/disconnected/suspended etc.
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .build();
-        }
-    }
-    //Connects the user to the GoogleApiClient on start
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
 
-    //Disconnects the user from the GoogleApiClient after closing
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
+        mThumbnail = (TextView) findViewById(R.id.thumbnail);
+        mThumbnail.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
+        //instantiapes the map and a test post.
         mMap = map;
+        p = new Post();
 
+        //sets the location arbitrarily to sydney
+        LatLng sydney = new LatLng(-33.867, 151.206);
+        LatLng sydney2 = new LatLng(-33.860, 151.150);
 
         try {
             map.setMyLocationEnabled(true);
@@ -77,36 +70,59 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             Log.d(TAG, "No permissons");
         }
 
+        //adds a test marker
+        testMarker = map.addMarker(new MarkerOptions()
+                .title("test")
+                .position(sydney)
+                .snippet("before test post")
+        );
 
-       // mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
+        testMarker2 = map.addMarker(new MarkerOptions()
+                .title("test2")
+                .position(sydney2)
+                .snippet("test numero dux")
+        );
+
+        //sets the tag object accossiated with the marker to an arbitrary string
+        testMarker.setTag("test post");
+        testMarker2.setTag("fuk this gay earth");
+
+        //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
+        mMap.setOnMarkerClickListener(this);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+
+        //displays text only when the marker is clicked, else it will hide it again
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (mThumbnail.getVisibility() == View.VISIBLE) {
+                    mThumbnail.setVisibility(View.INVISIBLE);}
+            }
+        });
+
     }
 
+
+    //excecutes when a marker is clicked. returns that marker.
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-       //Asks the user for permission to use the GPS
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+    public boolean onMarkerClick(final Marker marker) {
+
+        //gets the object associated with that marker and turns on the thumbnail
+        if (marker.getTag() != null)
+        {
+            mThumbnail.setText(marker.getTag().toString());
+            mThumbnail.setVisibility(View.VISIBLE);
         }
-        //gets last location of user
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);;
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-        if (mLastLocation != null) {
-            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-        }
 
-    }
-    //needs to be implemented but this is where we throw stuff if the connection is suspended
-    @Override
-    public void onConnectionSuspended(int i) {
+        //NOTE TO SELF: checking if the post is visable and then turning it invisible overwrites what just happened above
+        //              checking if the most is the same tag is useless because each time a marker is clicked theat tag is sent anyway
+        //that shit down there does not work
+//        if (mThumbnail.getText().equals(marker.getTag().toString()) && mThumbnail.getVisibility() == View.VISIBLE)
+//        {
+//            mThumbnail.setVisibility(View.INVISIBLE);
+//        }
 
-    }
-    //needs to be implemented but this is where we throw stuff if the connection failed
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d(TAG,(String) marker.getTag());
+        return false;
     }
 }
-
