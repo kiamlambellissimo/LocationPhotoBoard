@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private Marker testMarker, testMarker2;
     protected TextView mThumbnail;
 
+    protected ImageView mImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,6 +54,10 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
         mThumbnail.setVisibility(View.INVISIBLE);
+
+        // Display Image
+        mImage = (ImageView) findViewById(R.id.mp);
+        mImage.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -96,7 +103,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             @Override
             public void onMapClick(LatLng latLng) {
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
-                    mThumbnail.setVisibility(View.INVISIBLE);}
+                    mThumbnail.setVisibility(View.INVISIBLE);
+                    mImage.setVisibility(View.INVISIBLE);}
             }
         });
 
@@ -112,6 +120,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         {
             mThumbnail.setText(marker.getTag().toString());
             mThumbnail.setVisibility(View.VISIBLE);
+
+            //mImage.set
+            mImage.setVisibility(View.VISIBLE);
         }
 
         //NOTE TO SELF: checking if the post is visable and then turning it invisible overwrites what just happened above
