@@ -3,6 +3,8 @@ package kiam.locationphotoboard;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
@@ -18,14 +20,16 @@ import android.util.Log;
 //implements OnMapReadyCallback, ConnectionCallback and OnConnectionFailedListener
 //ConnectionCallback provides callbacks when user is connected/disconnected
 //OnConnectionFailedListener provides callbacks when a failed connection attempt is made by the client to the server
-public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapTestActivity extends Activity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     final String TAG = "MapTestActivity";
     final String MAPS_API_KEY = "AIzaSyBrBtIogaQ2lklgpqhAc3XXmEOqXdI_U4s";
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
-
+    private LocationRequest mLocationRequest;
+    private Marker mCurrLocationMarker;
     public String mLatitudeText;
     public String mLongitudeText;
     private FusedLocationProviderApi locationProvider;
@@ -52,10 +56,19 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                     .addOnConnectionFailedListener(this)
                     .build();
         }
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
     }
+
+
+
     //Connects the user to the GoogleApiClient on start
     protected void onStart() {
-        mGoogleApiClient.connect();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
         super.onStart();
     }
 
@@ -78,6 +91,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         }
 
 
+
+
        // mMap.addMarker(new MarkerOptions().title("Sydney").snippet("The most populous city in Australia.").position(toronto));
     }
 
@@ -88,7 +103,19 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
         //gets last location of user
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);;
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation == null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+        else {
+            handleNewLocation(mLastLocation);
+        };
+
+    }
+
+    private void handleNewLocation(Location location) {
+        Log.d(TAG, location.toString());
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
@@ -96,8 +123,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mLatitudeText = String.valueOf(mLastLocation.getLatitude());
             mLongitudeText = String.valueOf(mLastLocation.getLongitude());
         }
-
+        System.out.println("ive made it thru lol");
     }
+
     //needs to be implemented but this is where we throw stuff if the connection is suspended
     @Override
     public void onConnectionSuspended(int i) {
@@ -106,6 +134,18 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     //needs to be implemented but this is where we throw stuff if the connection failed
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        handleNewLocation(location);
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
 
     }
 }
