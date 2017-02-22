@@ -29,8 +29,8 @@ public class ObjectStructureActivity extends AppCompatActivity {
         //initialize allowance for eating
         allowance = 0;
 
-        theContent = new Post();
-        comment = new Post();
+//        theContent = new Post();
+//        comment = new Post();
         goodLength = true;
 
         //idk what i'm doing, does this let you use the things?

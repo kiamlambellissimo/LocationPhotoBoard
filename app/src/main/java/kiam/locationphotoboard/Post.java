@@ -1,6 +1,9 @@
 package kiam.locationphotoboard;
 
 //import java.awt.Image;
+import android.graphics.Bitmap;
+import android.media.Image;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,13 +38,16 @@ public class Post
     private ArrayList<Post> Comments;
     private String textContent;
     private Date theDate;
+    private Bitmap imageContent;
 
     // Text post route and Initialization of Content
-    public Post()
+    public Post(Bitmap i, String s)
     {
         // Initialization of (1)
         Rating = 0;     //Initialization of Rating
         Comments = new ArrayList<Post>();     //Initialization of the post's comments.
+        testString(s);
+        testImage(i);
 
     }
 
@@ -96,6 +102,17 @@ public class Post
         {
             textContent = "MESSAGE TOO LONG";
         }
+    }
+
+    public void testImage(Bitmap i)
+    {
+        //TODO: Check if the image is the proper file format
+        imageContent = i;
+    }
+
+    public Bitmap getImage()
+    {
+        return imageContent;
     }
 
 }

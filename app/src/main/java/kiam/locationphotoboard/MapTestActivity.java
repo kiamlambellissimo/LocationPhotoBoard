@@ -5,6 +5,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -53,18 +55,17 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         mapFragment.getMapAsync(this);
 
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
-        mThumbnail.setVisibility(View.INVISIBLE);
+        mThumbnail.setVisibility(View.VISIBLE);
 
         // Display Image
         mImage = (ImageView) findViewById(R.id.mp);
-        mImage.setVisibility(View.INVISIBLE);
+        mImage.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         //instantiapes the map and a test post.
         mMap = map;
-        p = new Post();
 
         //sets the location arbitrarily to sydney
         LatLng sydney = new LatLng(-33.867, 151.206);
@@ -91,8 +92,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         );
 
         //sets the tag object accossiated with the marker to an arbitrary string
-        testMarker.setTag("test post");
-        testMarker2.setTag("fuk this gay earth");
+        testMarker.setTag(new Post(BitmapFactory.decodeFile("/Users/angietong/aakim1/LocationPhotoBoard/app/src/main/res/drawable/mp.png"), "fuck this gay earth"));
+        testMarker2.setTag(new Post(BitmapFactory.decodeFile("/Users/angietong/aakim1/LocationPhotoBoard/app/src/main/res/drawable/mp2.png"), "i really want this hoodie lol"));
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -104,7 +105,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             public void onMapClick(LatLng latLng) {
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
                     mThumbnail.setVisibility(View.INVISIBLE);
-                    mImage.setVisibility(View.INVISIBLE);}
+                    //mImage.setVisibility(View.INVISIBLE);
+                    }
             }
         });
 
@@ -118,10 +120,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         //gets the object associated with that marker and turns on the thumbnail
         if (marker.getTag() != null)
         {
-            mThumbnail.setText(marker.getTag().toString());
+            Post temp = (Post) marker.getTag();
+            mThumbnail.setText(temp.getTextContent());
             mThumbnail.setVisibility(View.VISIBLE);
 
             //mImage.set
+            mImage.setImageBitmap(temp.getImage());
             mImage.setVisibility(View.VISIBLE);
         }
 
@@ -133,7 +137,6 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 //            mThumbnail.setVisibility(View.INVISIBLE);
 //        }
 
-        Log.d(TAG,(String) marker.getTag());
         return false;
     }
 }
