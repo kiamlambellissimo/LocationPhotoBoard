@@ -33,8 +33,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     private Location mLastLocation;
-    private String mLatitudeText;
-    private String mLongitudeText;
+    private double mLatitudeText;
+    private double mLongitudeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,17 +126,16 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             LatLng latlng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-            if (mLastLocation != null) {
-                mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-                mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-            }
+            mMap.setMyLocationEnabled(true);
+            mLatitudeText = mLastLocation.getLatitude();
+            mLongitudeText = mLastLocation.getLongitude();
+
         }
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case FINE_LOCATION_PERMISSION_REQUEST: {
                 if (grantResults.length > 0
