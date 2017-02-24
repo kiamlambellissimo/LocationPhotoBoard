@@ -134,12 +134,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
 
         //sets the tag object accossiated with the marker to an arbitrary string
         //checks version of andriod to make sure its >= 19
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
+//        }
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -205,6 +205,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mMap.setMyLocationEnabled(true);
             mLatitudeText = mLastLocation.getLatitude();
             mLongitudeText = mLastLocation.getLongitude();
+            addTestMarkers(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         }
     }
 
@@ -264,15 +265,23 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         //adds a test marker
         testMarker = mMap.addMarker(new MarkerOptions()
                 .title("test")
-                .position(new LatLng(lat + 1, longi + 1))
+                .position(new LatLng(lat + 0.005, longi))
                 .snippet("before test post")
         );
 
         testMarker2 = mMap.addMarker(new MarkerOptions()
                 .title("test2")
-                .position(new LatLng(lat - 1, longi - 1))
+                .position(new LatLng(lat - 0.005, longi - 0.005))
                 .snippet("test numero dux")
         );
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
+        }
+
     }
 
 }
