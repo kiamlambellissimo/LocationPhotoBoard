@@ -94,8 +94,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         );
 
         //sets the tag object accossiated with the marker to an arbitrary string
-        testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
-        testMarker2.setTag(new Post("https://puu.sh/ugScO.png", "i really want this hoodie lol"));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            testMarker2.setTag(new Post("https://puu.sh/ugScO.png", "i really want this hoodie lol"));
+        }
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -127,7 +131,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mThumbnail.setVisibility(View.VISIBLE);
 
             //mImage.set
-            mImage.setImageDrawable(temp.getImage());
+            mImage.setImageBitmap(temp.getImage());
             mImage.setVisibility(View.VISIBLE);
         }
 

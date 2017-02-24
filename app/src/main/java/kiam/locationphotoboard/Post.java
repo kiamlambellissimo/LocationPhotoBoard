@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,17 +47,17 @@ public class Post
     private ArrayList<Post> Comments;
     private String textContent;
     private Date theDate;
-    private Drawable imageContent;
+    private Bitmap imageContent;
 
     // Text post route and Initialization of Content
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public Post(String i, String s)
+    public Post(String image, String text)
     {
         // Initialization of (1)
         Rating = 0;     //Initialization of Rating
         Comments = new ArrayList<Post>();     //Initialization of the post's comments.
-        testString(s);
-        testImage(i);
+        testString(text);
+        testImage(image);
 
     }
 
@@ -116,16 +117,21 @@ public class Post
     public void testImage(String i)
     {
         //TODO: Check if the image is the proper file format
-        InputStream is = null;
+        URL url = null;
         try {
-            is = (InputStream) new URL(i).getContent();
-            imageContent = Drawable.createFromStream(is, "src name");
-        } catch (Exception e) {
+            url = new URL(i);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            imageContent = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
 
-    public Drawable getImage()
+    public Bitmap getImage()
     {
         return imageContent;
     }
