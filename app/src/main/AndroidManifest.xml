@@ -24,14 +24,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapTestActivity" />
-        <activity android:name=".CameraTestActivity"></activity>
-        <activity android:name=".CloudTestActivity"></activity>
-        <activity android:name=".UITestActivity"></activity>
-        <activity android:name=".ObjectStructureActivity"></activity>
+        <activity android:name=".CameraTestActivity" />
+        <activity android:name=".CloudTestActivity" />
+        <activity android:name=".UITestActivity" />
+        <activity android:name=".ObjectStructureActivity" />
         <activity
             android:name=".viewPostActivity"
             android:label="@string/title_activity_view_post"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".viewPostStatActivity"></activity>
     </application>
 
 </manifest>

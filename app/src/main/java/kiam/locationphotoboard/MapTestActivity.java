@@ -81,6 +81,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private Location mLastLocation;
     private double mLatitudeText;
     private double mLongitudeText;
+    protected static Post temp;
 
     protected ImageView mImage;
 
@@ -165,14 +166,14 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 //Toast.makeText(v.getContext(),
                  //       "The favorite list would appear on clicking this icon",
                   //      Toast.LENGTH_LONG).show();
-                switchView(v);
+                switchView(v, temp);
             }
         });
 
     }
 
-    private void switchView(View view) {
-        Intent i = new Intent(this, viewPostActivity.class);
+    private void switchView(View view, Post markerClicked) {
+        Intent i = new Intent(this, viewPostStatActivity.class);
         startActivity(i);
     }
 
@@ -184,7 +185,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         //gets the object associated with that marker and turns on the thumbnail
         if (marker.getTag() != null)
         {
-            Post temp = (Post) marker.getTag();
+            temp = (Post) marker.getTag();
             mThumbnail.setText(temp.getTextContent());
             mThumbnail.setVisibility(View.VISIBLE);
 
