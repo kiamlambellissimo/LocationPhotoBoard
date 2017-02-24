@@ -2,8 +2,16 @@ package kiam.locationphotoboard;
 
 //import java.awt.Image;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.RequiresApi;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,10 +46,11 @@ public class Post
     private ArrayList<Post> Comments;
     private String textContent;
     private Date theDate;
-    private Bitmap imageContent;
+    private Drawable imageContent;
 
     // Text post route and Initialization of Content
-    public Post(Bitmap i, String s)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public Post(String i, String s)
     {
         // Initialization of (1)
         Rating = 0;     //Initialization of Rating
@@ -104,13 +113,19 @@ public class Post
         }
     }
 
-    public void testImage(Bitmap i)
+    public void testImage(String i)
     {
         //TODO: Check if the image is the proper file format
-        imageContent = i;
+        InputStream is = null;
+        try {
+            is = (InputStream) new URL(i).getContent();
+            imageContent = Drawable.createFromStream(is, "src name");
+        } catch (Exception e) {
+        }
+
     }
 
-    public Bitmap getImage()
+    public Drawable getImage()
     {
         return imageContent;
     }

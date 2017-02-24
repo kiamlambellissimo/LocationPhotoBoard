@@ -7,8 +7,10 @@ import com.google.android.gms.maps.model.*;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -55,11 +57,11 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         mapFragment.getMapAsync(this);
 
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
-        mThumbnail.setVisibility(View.VISIBLE);
+        mThumbnail.setVisibility(View.INVISIBLE);
 
         // Display Image
         mImage = (ImageView) findViewById(R.id.mp);
-        mImage.setVisibility(View.VISIBLE);
+        mImage.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -92,8 +94,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         );
 
         //sets the tag object accossiated with the marker to an arbitrary string
-        testMarker.setTag(new Post(BitmapFactory.decodeFile("/Users/angietong/aakim1/LocationPhotoBoard/app/src/main/res/drawable/mp.png"), "fuck this gay earth"));
-        testMarker2.setTag(new Post(BitmapFactory.decodeFile("/Users/angietong/aakim1/LocationPhotoBoard/app/src/main/res/drawable/mp2.png"), "i really want this hoodie lol"));
+        testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
+        testMarker2.setTag(new Post("https://puu.sh/ugScO.png", "i really want this hoodie lol"));
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -105,7 +107,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             public void onMapClick(LatLng latLng) {
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
                     mThumbnail.setVisibility(View.INVISIBLE);
-                    //mImage.setVisibility(View.INVISIBLE);
+                    mImage.setVisibility(View.INVISIBLE);
                     }
             }
         });
@@ -125,7 +127,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mThumbnail.setVisibility(View.VISIBLE);
 
             //mImage.set
-            mImage.setImageBitmap(temp.getImage());
+            mImage.setImageDrawable(temp.getImage());
             mImage.setVisibility(View.VISIBLE);
         }
 
