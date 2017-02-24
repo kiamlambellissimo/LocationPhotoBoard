@@ -153,8 +153,27 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                     mImage.setVisibility(View.INVISIBLE);
                     }
             }
+
         });
 
+        mImage.setClickable(true);
+
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Log.i(SystemSettings.APP_TAG + " : " + HomeActivity.class.getName(), "Entered onClick method");
+                //Toast.makeText(v.getContext(),
+                 //       "The favorite list would appear on clicking this icon",
+                  //      Toast.LENGTH_LONG).show();
+                switchView(v);
+            }
+        });
+
+    }
+
+    private void switchView(View view) {
+        Intent i = new Intent(this, viewPostActivity.class);
+        startActivity(i);
     }
 
 
