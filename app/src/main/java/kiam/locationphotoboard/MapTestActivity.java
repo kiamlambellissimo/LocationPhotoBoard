@@ -94,11 +94,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         );
 
         //sets the tag object accossiated with the marker to an arbitrary string
+        //checks version of andriod to make sure its >= 19
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            testMarker2.setTag(new Post("https://puu.sh/ugScO.png", "i really want this hoodie lol"));
+            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
         }
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.

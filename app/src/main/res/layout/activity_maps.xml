@@ -32,7 +32,7 @@
             tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_gravity="bottom|left"
             android:padding="60dp"
@@ -45,7 +45,7 @@
             android:layout_width="168dp"
             android:layout_height="160dp"
             android:padding="12dp"
-            android:layout_gravity="top"
+            android:layout_gravity="bottom|right"
             android:id="@+id/mp"
             android:src="@drawable/mp"/>
 
