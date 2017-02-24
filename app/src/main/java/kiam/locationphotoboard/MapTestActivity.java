@@ -5,61 +5,29 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-
-import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 
@@ -81,9 +49,12 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private Location mLastLocation;
     private double mLatitudeText;
     private double mLongitudeText;
-
     protected ImageView mImage;
 
+    /*
+     * Initialize the Map and its Views are set to INVISIBLE
+     * Generates data for the GoogleAPIClient
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -96,16 +67,18 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //Ready up the textView
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
         mThumbnail.setVisibility(View.INVISIBLE);
 
-        // Display Image
+        // Ready up the imageView
         mImage = (ImageView) findViewById(R.id.mp);
         mImage.setVisibility(View.INVISIBLE);
 
         buildGoogleAPIClient();
     }
 
+    //Ready up the Map methods
     private void buildGoogleAPIClient() {
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -116,30 +89,24 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         }
     }
 
+    /*
+     * When the map is ready to be displayed:
+     *  - listeners are created
+     *  - user's location is accessed
+     */
+
     @Override
     public void onMapReady(GoogleMap map) {
         //instantiapes the map and a test post.
         mMap = map;
 
-        //sets the location arbitrarily to sydney
-//        LatLng sydney = new LatLng(-33.867, 151.206);
-//        LatLng sydney2 = new LatLng(-33.860, 151.150);
-
+        //enables user's location to be manipulated by map methods
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e)
         {
             Log.d(TAG, "No permissons");
         }
-
-        //sets the tag object accossiated with the marker to an arbitrary string
-        //checks version of andriod to make sure its >= 19
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
-//        }
 
         //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
         mMap.setOnMarkerClickListener(this);
@@ -151,25 +118,27 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
                     mThumbnail.setVisibility(View.INVISIBLE);
                     mImage.setVisibility(View.INVISIBLE);
-                    }
+                }
             }
         });
-
     }
+    /*
+    * Get's the marker's properties and set the image and text views VISIBLE once respective fields are obtained
+    * Temporary Post object created to decode the passed Tag
+    */
 
-
-    //excecutes when a marker is clicked. returns that marker.
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
         //gets the object associated with that marker and turns on the thumbnail
         if (marker.getTag() != null)
         {
+            //sets the text part of the thumbnail
             Post temp = (Post) marker.getTag();
             mThumbnail.setText(temp.getTextContent());
             mThumbnail.setVisibility(View.VISIBLE);
 
-            //mImage.set
+            //sets the image part of the thumbnail
             mImage.setImageBitmap(temp.getImage());
             mImage.setVisibility(View.VISIBLE);
         }
@@ -185,6 +154,13 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         return false;
     }
 
+    /*
+     * Once the map is connected to Google, permissions are requested and the
+     * map camera pans to the user's current location -- thanks alvis
+     *
+     * Test Markers are created and dropped near the user's current location
+     *  - initialized with random bs properties
+     */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         findLocation();
@@ -205,9 +181,13 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
             mMap.setMyLocationEnabled(true);
             mLatitudeText = mLastLocation.getLatitude();
             mLongitudeText = mLastLocation.getLongitude();
+
+            //TEST MARKER GENERATOR
             addTestMarkers(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         }
     }
+
+    //REQUIRED TO BE OVERWRITIEN METHODS
 
     protected void onStart() {
         mGoogleApiClient.connect();
@@ -260,6 +240,11 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         }
     }
 
+    /*
+     * Creates test Marker objects filled with random stuff
+     *   - the Post object associated with the Marker is created within the setting of the tag
+     *   - TODO: this works for now but is subject to change upon backendless integration
+     */
     public void addTestMarkers(double lat, double longi)
     {
         //adds a test marker
@@ -275,7 +260,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 .snippet("test numero dux")
         );
 
+        //Checks the version of the user's andriod (if its >= 19)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        //
             testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
