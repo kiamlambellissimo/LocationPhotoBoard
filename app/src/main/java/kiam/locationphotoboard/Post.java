@@ -48,6 +48,8 @@ public class Post
     private String textContent;
     private Date theDate;
     private Bitmap imageContent;
+    private String urlString;
+
 
     // Text post route and Initialization of Content
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -57,7 +59,8 @@ public class Post
         Rating = 0;     //Initialization of Rating
         Comments = new ArrayList<Post>();     //Initialization of the post's comments.
         testString(text);
-        testImage(image);
+        urlString = image;
+        testImage(urlString);
 
     }
 
@@ -117,17 +120,23 @@ public class Post
     public void testImage(String i)
     {
         //TODO: Check if the image is the proper file format
-        URL url = null;
-        try {
-            url = new URL(i);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            imageContent = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                URL url = null;
+                try {
+                    url = new URL(urlString);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    imageContent = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 
