@@ -9,69 +9,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kiam.locationphotoboard.MainActivity">
-
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MAPS"
-        android:id="@+id/mapActivityButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="toMapsActivity"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CLOUD"
-        android:id="@+id/cloudActivityButton"
-        android:layout_alignBottom="@+id/mapActivityButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="toCloudActivity"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CAMERA"
-        android:id="@+id/cameraActivityButton"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="toCameraActivity"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UI "
-        android:id="@+id/uiActivityButton"
-        android:layout_alignTop="@+id/cameraActivityButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="toUIActivity"/>
-
     <AnalogClock
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ITGAnalogClock"
-        android:layout_above="@+id/uiActivityButton"
         android:layout_centerHorizontal="true"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OBJECT STRUCTURE"
-        android:id="@+id/objectActivityButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="toObjectStructureActivity"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,15 +27,31 @@
         android:layout_alignLeft="@+id/ITGAnalogClock"
         android:layout_alignStart="@+id/ITGAnalogClock"/>
 
-    <EditText
+    <Button
+        android:text="Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Welcome"
-        android:ems="10"
-        android:id="@+id/tvWelcomeMessage"
-        android:layout_below="@+id/uiActivityButton"
-        android:layout_toLeftOf="@+id/uiActivityButton"
-        android:layout_toStartOf="@+id/uiActivityButton"
-        android:layout_marginTop="60dp" />
+        android:id="@+id/loginActivityButton"
+        android:onClick="toLoginActivity"
+        android:layout_above="@+id/registerActivityButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="98dp" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerActivityButton"
+        android:textSize="14sp"
+        android:onClick="toRegisterActivity"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/ITGAnalogClock"
+        android:layout_toEndOf="@+id/ITGAnalogClock"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="142dp" />
+
 </RelativeLayout>
