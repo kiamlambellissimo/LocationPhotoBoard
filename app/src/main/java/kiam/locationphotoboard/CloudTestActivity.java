@@ -13,10 +13,6 @@ import com.backendless.exceptions.BackendlessFault;
 
 public class CloudTestActivity extends AppCompatActivity
 {
-
-    final String YOUR_APP_ID = "A008628F-CA21-B27B-FFB9-3F872AB77900";
-    final String YOUR_SECRET_KEY = "A2C5C06C-9C3D-03A5-FF23-8BD591629C00";
-    final String appVersion = "v1";
     final String TAG = "CloudTestActivity";
     Button mSaveThePostButton;
 
@@ -75,7 +71,7 @@ public class CloudTestActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cloud_test);
         mSaveThePostButton = (Button) findViewById(R.id.savePost);
-        Backendless.initApp(this, YOUR_APP_ID, YOUR_SECRET_KEY, appVersion);
+
 
         mSaveThePostButton.setOnClickListener(new View.OnClickListener()
         {
