@@ -75,15 +75,31 @@
         android:onClick="Login" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="15dp"
+        android:text="Don't have an account?" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="2dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
-        android:text="If you have not registered, please register by clicking the glowy special button which I have no yet created"
+        android:layout_marginTop="2dp"
+        android:text="Sign up now"
+        android:clickable="true"
+        android:onClick="toRegisterActivity"/>
 
-        />
 
 </LinearLayout>

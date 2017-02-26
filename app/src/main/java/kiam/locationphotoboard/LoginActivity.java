@@ -44,12 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity( new Intent( getBaseContext(), MainActivity.class ) );
             }
         });
-
-
-
     }
-
-
+    public void toRegisterActivity(View view){
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +58,5 @@ public class LoginActivity extends AppCompatActivity {
         Backendless.initApp(this, MainActivity.YOUR_APP_ID, MainActivity.YOUR_SECRET_KEY, MainActivity.appVersion);
       // mUsernameTextField = (EditText) findViewById(R.id.loginActivityUsernameTF);
       //  mPasswordTextField = (EditText) findViewById(R.id.loginActivityPasswordTF);
-
-
     }
-
 }
