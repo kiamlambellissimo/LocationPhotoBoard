@@ -61,6 +61,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
 
 
 public class MapTestActivity extends Activity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -82,7 +83,7 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     private double mLatitudeText;
     private double mLongitudeText;
     protected static Post temp;
-
+    protected TextView mBackground;
     protected ImageView mImage;
 
     @Override
@@ -96,6 +97,9 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mBackground =(TextView) findViewById(R.id.tnbackground);
+        mBackground.setVisibility(View.INVISIBLE);
 
         mThumbnail = (TextView) findViewById(R.id.thumbnail);
         mThumbnail.setVisibility(View.INVISIBLE);
@@ -152,7 +156,8 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
                     mThumbnail.setVisibility(View.INVISIBLE);
                     mImage.setVisibility(View.INVISIBLE);
-                    }
+                    mBackground.setVisibility(View.INVISIBLE);
+                }
             }
 
         });
@@ -185,6 +190,10 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
         //gets the object associated with that marker and turns on the thumbnail
         if (marker.getTag() != null)
         {
+            //set background
+            mBackground.setVisibility(View.VISIBLE);
+
+            //set image
             temp = (Post) marker.getTag();
             mThumbnail.setText(temp.getTextContent());
             mThumbnail.setVisibility(View.VISIBLE);
@@ -284,22 +293,18 @@ public class MapTestActivity extends Activity implements OnMapReadyCallback, Goo
     {
         //adds a test marker
         testMarker = mMap.addMarker(new MarkerOptions()
-                .title("test")
                 .position(new LatLng(lat + 0.005, longi))
-                .snippet("before test post")
         );
 
         testMarker2 = mMap.addMarker(new MarkerOptions()
-                .title("test2")
                 .position(new LatLng(lat - 0.005, longi - 0.005))
-                .snippet("test numero dux")
         );
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
+            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really really really want this hoodie lol"));
         }
 
     }

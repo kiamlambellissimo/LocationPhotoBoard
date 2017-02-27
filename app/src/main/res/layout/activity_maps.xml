@@ -32,14 +32,28 @@
             tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="190dp"
             android:layout_height="160dp"
             android:layout_gravity="bottom|left"
             android:padding="60dp"
             android:background="#AA000000"
             android:textColor="#ffffffff"
-            android:text="Map Image"
-            android:id="@+id/thumbnail" />
+            android:text="jadsfkdsfkjahdsfhjkdsafh"
+            android:paddingStart="20dp"
+            android:id="@+id/thumbnail"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="160dp"
+            android:layout_gravity="bottom|right"
+            android:padding="60dp"
+            android:background="#AA000000"
+            android:textColor="#ffffffff"
+            android:text=""
+            android:id="@+id/tnbackground" />
 
         <ImageView
             android:layout_width="168dp"
@@ -48,6 +62,7 @@
             android:layout_gravity="bottom|right"
             android:id="@+id/mp"
             android:src="@drawable/mp"/>
+
 
 
     </FrameLayout>
