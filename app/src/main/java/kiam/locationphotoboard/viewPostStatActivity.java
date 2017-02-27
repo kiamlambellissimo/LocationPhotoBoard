@@ -23,10 +23,12 @@ public class viewPostStatActivity extends MapTestActivity {
         final TextView mDate = (TextView) findViewById(R.id.theDate);
         final Button upButton = (Button) findViewById(R.id.up); // up and downvote buttons
         final Button downButton = (Button) findViewById(R.id.down);
+        final TextView mTitle = (TextView) findViewById(R.id.title);
 
         mImage.setImageBitmap(temp.getImage());
         theRating.setText("Rating: " + temp.getRating());
         mDate.setText("Posted on: " + temp.getDate().toString());
+        mTitle.setText(temp.getTextContent());
 
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override

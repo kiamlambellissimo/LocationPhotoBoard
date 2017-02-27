@@ -10,28 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kiam.locationphotoboard.viewPostStatActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp"
-        android:layout_gravity="top|right"
-        android:id="@+id/mp"
-        android:src="@drawable/mp"
-        android:layout_above="@+id/rating"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="26dp" />
-
-    <TextView
-        android:text="Rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rating"
-        android:layout_marginBottom="14dp"
-        android:layout_above="@+id/theDate"
-        android:layout_alignLeft="@+id/theDate"
-        android:layout_alignStart="@+id/theDate" />
-
     <Button
         android:text="Down"
         android:layout_width="wrap_content"
@@ -54,14 +32,46 @@
         android:layout_alignRight="@+id/rating"
         android:layout_alignEnd="@+id/rating" />
 
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="15dp"
+        android:id="@+id/mp"
+        android:src="@drawable/mp"
+        android:maxHeight="100dp"
+        android:maxWidth="2000dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/rating" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
         android:id="@+id/theDate"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="13dp"
         android:layout_above="@+id/down"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rating"
+        android:layout_marginBottom="7dp"
+        android:layout_above="@+id/theDate"
+        android:layout_alignLeft="@+id/theDate"
+        android:layout_alignStart="@+id/theDate" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:id="@+id/title"
         android:layout_centerHorizontal="true" />
 
 
