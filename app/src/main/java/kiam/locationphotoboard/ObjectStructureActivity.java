@@ -14,12 +14,10 @@ import butterknife.ButterKnife;
 import butterknife.Bind;
 
 public class ObjectStructureActivity extends AppCompatActivity {
-
-    private int allowance;
-    private Post theContent;
     private Post comment;
     private boolean goodLength;
-
+    private int allowance;
+    private Post theContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +26,6 @@ public class ObjectStructureActivity extends AppCompatActivity {
 
         //initialize allowance for eating
         allowance = 0;
-
 //        theContent = new Post();
 //        comment = new Post();
         goodLength = true;
@@ -38,7 +35,6 @@ public class ObjectStructureActivity extends AppCompatActivity {
         final TextView thePost = (TextView) findViewById(R.id.textpost); //the post
         final EditText putpost = (EditText) findViewById(R.id.putpost); // the text field that gets posted
         final TextView theDate = (TextView) findViewById(R.id.theDate); //the date of the post, won't show up if post too long
-        final TextView theComments = (TextView) findViewById(R.id.comments); //the list of comments on the post
         final Button upButton = (Button) findViewById(R.id.up); // up and downvote buttons
         final Button downButton = (Button) findViewById(R.id.down);
         final Button addToComments = (Button) findViewById(R.id.postcomment); //button for entering the comment
@@ -75,23 +71,29 @@ public class ObjectStructureActivity extends AppCompatActivity {
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (goodLength) {
-                    if (allowance == 0) {
-                        theContent.addRating();
-                        theRating.setText(Integer.toString(theContent.getRating()));
-                        allowance = 1; //the check to only allow 1 up or down vote
-                    } else if (allowance == 2) {
-                        theContent.addRating();
-                        theContent.addRating();
-                        theRating.setText(Integer.toString(theContent.getRating()));
-                        allowance = 1; //the check to only allow 1 up or down vote
-                    } else if (allowance == 1) {
-                        theContent.subRating();
-                        theRating.setText(Integer.toString(theContent.getRating()));
-                        allowance = 0;
-                    } else {
-                        theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
-                    }
+                if (allowance == 0) {
+                    theContent.addRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 1; //the check to only allow 1 up or down vote
+                }
+
+                else if(allowance == 2)
+                {
+                    theContent.addRating();
+                    theContent.addRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 1; //the check to only allow 1 up or down vote
+                }
+
+                else if(allowance == 1)
+                {
+                    theContent.subRating();
+                    theRating.setText(Integer.toString(theContent.getRating()));
+                    allowance = 0;
+                }
+
+                else {
+                    theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                 }
             }
         });
@@ -117,20 +119,6 @@ public class ObjectStructureActivity extends AppCompatActivity {
                     } else {
                         theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                     }
-                }
-            }
-        });
-
-        addToComments.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                comment.testString(putComment.getText().toString());
-                comment.addToComments(comment);
-                for (Post p : comment.getComments())
-                {
-                    theComments.setText(p.getTextContent());
                 }
             }
         });

@@ -22,16 +22,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp" />
 
-    <Button
-        android:text="Up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/up"
-        android:layout_alignBaseline="@+id/down"
-        android:layout_alignBottom="@+id/down"
-        android:layout_alignRight="@+id/rating"
-        android:layout_alignEnd="@+id/rating" />
-
     <ImageView
 
         android:layout_width="match_parent"
@@ -73,6 +63,15 @@
         android:layout_gravity="top|center"
         android:id="@+id/title"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/up"
+        android:layout_below="@+id/theDate"
+        android:layout_toLeftOf="@+id/title"
+        android:layout_toStartOf="@+id/title" />
 
 
 </RelativeLayout>
