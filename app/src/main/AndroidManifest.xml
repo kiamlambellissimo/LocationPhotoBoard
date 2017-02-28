@@ -34,5 +34,4 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".viewPostStatActivity"></activity>
     </application>
-
 </manifest>
