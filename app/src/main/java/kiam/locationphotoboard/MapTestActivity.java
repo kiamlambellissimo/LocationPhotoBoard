@@ -71,6 +71,7 @@ import com.google.android.gms.maps.model.*;
             mImage = (ImageView) findViewById(R.id.mp);
             mImage.setVisibility(View.INVISIBLE);
 
+
             buildGoogleAPIClient();
         }
 
@@ -109,6 +110,7 @@ import com.google.android.gms.maps.model.*;
 
             //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
             mMap.setOnMarkerClickListener(this);
+            mMap.setOnMapClickListener(this);
 
             mImage.setClickable(true);
 
@@ -129,6 +131,7 @@ import com.google.android.gms.maps.model.*;
             Intent i = new Intent(this, viewPostStatActivity.class);
             startActivity(i);
         }
+
 
 
         //excecutes when a marker is clicked. returns that marker.
@@ -256,6 +259,7 @@ import com.google.android.gms.maps.model.*;
             }
 
         }
+
             @Override
             public void onMapClick(LatLng latLng) {
                 if (mThumbnail.getVisibility() == View.VISIBLE) {
