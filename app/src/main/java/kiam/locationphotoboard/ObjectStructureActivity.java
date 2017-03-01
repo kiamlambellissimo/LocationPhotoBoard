@@ -14,11 +14,13 @@ import butterknife.ButterKnife;
 import butterknife.Bind;
 
 public class ObjectStructureActivity extends AppCompatActivity {
-    private Post comment;
-    private boolean goodLength;
+
     private int allowance;
     private Post theContent;
+    private Post comment;
+    private boolean goodLength;
 
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,14 @@ public class ObjectStructureActivity extends AppCompatActivity {
 
         //initialize allowance for eating
         allowance = 0;
+<<<<<<< HEAD
 //        theContent = new Post();
 //        comment = new Post();
+=======
+
+        theContent = new Post();
+        comment = new Post();
+>>>>>>> origin/LoginBranch
         goodLength = true;
 
         //idk what i'm doing, does this let you use the things?
@@ -71,29 +79,23 @@ public class ObjectStructureActivity extends AppCompatActivity {
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allowance == 0) {
-                    theContent.addRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 1; //the check to only allow 1 up or down vote
-                }
-
-                else if(allowance == 2)
-                {
-                    theContent.addRating();
-                    theContent.addRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 1; //the check to only allow 1 up or down vote
-                }
-
-                else if(allowance == 1)
-                {
-                    theContent.subRating();
-                    theRating.setText(Integer.toString(theContent.getRating()));
-                    allowance = 0;
-                }
-
-                else {
-                    theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                if (goodLength) {
+                    if (allowance == 0) {
+                        theContent.addRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 1; //the check to only allow 1 up or down vote
+                    } else if (allowance == 2) {
+                        theContent.addRating();
+                        theContent.addRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 1; //the check to only allow 1 up or down vote
+                    } else if (allowance == 1) {
+                        theContent.subRating();
+                        theRating.setText(Integer.toString(theContent.getRating()));
+                        allowance = 0;
+                    } else {
+                        theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
+                    }
                 }
             }
         });
@@ -119,8 +121,28 @@ public class ObjectStructureActivity extends AppCompatActivity {
                     } else {
                         theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                     }
+<<<<<<< HEAD
                 }
             }
         });
     }
+                }
+            }
+        });
+
+        addToComments.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                comment.testString(putComment.getText().toString());
+                comment.addToComments(comment);
+                for (Post p : comment.getComments())
+                {
+                    theComments.setText(p.getTextContent());
+                }
+            }
+        });
+        */
+    //}
 }

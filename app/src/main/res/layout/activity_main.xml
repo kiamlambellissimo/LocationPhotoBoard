@@ -84,4 +84,28 @@
         android:layout_above="@+id/ITGAnalogClock"
         android:layout_alignLeft="@+id/ITGAnalogClock"
         android:layout_alignStart="@+id/ITGAnalogClock"/>
+
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:id="@+id/registerActivityButton"
+        android:textSize="14sp"
+        android:onClick="toRegisterActivity" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ITGAnalogClock"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/loginActivityButton"
+        android:onClick="toLoginActivity" />
+
 </RelativeLayout>
