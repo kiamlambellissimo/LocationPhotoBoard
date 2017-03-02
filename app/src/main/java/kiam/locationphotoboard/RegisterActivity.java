@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,6 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     //@Bind(R.id.passwordTextField)
     EditText mPasswordTextField;
+
+    EditText mPassword2TextField;
+
+    CheckBox cCheckBox;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -52,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = mUsernameTextField.getText().toString();
         String emailAddress = mEmailAddressTextField.getText().toString();
         String password = mPasswordTextField.getText().toString();
+        String passwordConfirm = mPassword2TextField.getText().toString();
 
 
         if (username == null || username.equals("")) {
@@ -65,6 +71,21 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (passwordConfirm == null || password.equals("")) {
+            showToast("Password Confirmation cannot be empty");
+            return;
+        }
+
+        if (!passwordConfirm.equals(password)) {
+            showToast("Password Confirmation must equal Password");
+            return;
+        }
+
+        if(!cCheckBox.isChecked())
+        {
+            showToast("You must accept terms and conditions to register");
+            return;
+        }
 
         Log.d(TAG, "Check1");
 
@@ -112,6 +133,11 @@ public class RegisterActivity extends AppCompatActivity {
         mUsernameTextField = (EditText) findViewById(R.id.usernameTextField);
         mEmailAddressTextField = (EditText) findViewById(R.id.emailAddressTextField);
         mPasswordTextField = (EditText) findViewById(R.id.passwordTextField);
+        mUsernameTextField = (EditText) findViewById(R.id.registerActivityUsername);
+        mEmailAddressTextField = (EditText) findViewById(R.id.registerActivityEmailAddress);
+        mPasswordTextField = (EditText) findViewById(R.id.registerActivityPassword);
+        mPassword2TextField = (EditText) findViewById(R.id.registerActivityPasswordConfirm);
+        cCheckBox = (CheckBox) findViewById(R.id.registerActivityCheckBox);
         Log.d(TAG, "Check-0");
       /*
         mRegisterButton.setOnClickListener(new View.OnClickListener()
@@ -137,6 +163,11 @@ public class RegisterActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    public void toLoginActivity(View view) {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 
     private void showToast(String msg) {

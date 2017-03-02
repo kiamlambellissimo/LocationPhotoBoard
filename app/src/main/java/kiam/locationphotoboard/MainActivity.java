@@ -24,18 +24,6 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.mapActivityButton)
     Button mMapsActivityButton;
 
-    @Bind(R.id.cameraActivityButton)
-    Button mCameraActivityButton;
-
-    @Bind(R.id.cloudActivityButton)
-    Button mCloudActivityButton;
-
-    @Bind(R.id.objectActivityButton)
-    Button mObjectActivityButton;
-
-    @Bind(R.id.uiActivityButton)
-    Button mUIActivityButton;
-
     @Bind(R.id.registerActivityButton)
     Button mRegisterActivityButton;
 
@@ -47,7 +35,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Backendless.initApp(this, YOUR_APP_ID, YOUR_SECRET_KEY, appVersion);
         Log.d(TAG, "LoginVariable = " + loginT);
 
@@ -63,31 +50,11 @@ public class MainActivity extends AppCompatActivity
         startActivity(i);
     }
 
-    public void toMapsActivity(View view){
-        Intent i = new Intent(this, MapTestActivity.class);
-        startActivity(i);
-    }
+        Backendless.initApp(this, YOUR_APP_ID, YOUR_SECRET_KEY, appVersion);
+        Log.d(TAG, "LoginVariable = " + loginT);
 
-    public void toCameraActivity(View view){
-        Intent i = new Intent(this, CameraTestActivity.class);
-        startActivity(i);
-    }
-
-    public void toCloudActivity(View view){
-        Intent i = new Intent(this, CloudTestActivity.class);
-        startActivity(i);
-    }
-
-    public void toUIActivity(View view){
-        Intent i = new Intent(this, UITestActivity.class);
-        startActivity(i);
-    }
-
-    public void toObjectStructureActivity(View view){
+    public void toObjectStructureActivity(View view) {
         Intent i = new Intent(this, ObjectStructureActivity.class);
         startActivity(i);
     }
-
-
-
 }

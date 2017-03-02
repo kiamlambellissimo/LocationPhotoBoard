@@ -7,7 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import butterknife.ButterKnife;
+import butterknife.Bind;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
@@ -18,16 +19,11 @@ import butterknife.Bind;
 public class LoginActivity extends AppCompatActivity {
 
     final String TAG = "LoginActivity";
+
     //binding the XML objects (buttons, textfields) to this java class
-
-    @Bind(R.id.loginButton)
-    Button mLoginButton;
-
-  //  @Bind(R.id.loginActivityUsernameTF)
-    EditText mUsernameTextField;
-
-   // @Bind(R.id.loginActivityPasswordTF)
-    EditText mPasswordTextField;
+    @Bind(R.id.loginActivityLoginButton) Button mLoginButton;
+    @Bind(R.id.loginActivityUsernameTF) EditText mUsernameTextField;
+    @Bind(R.id.loginActivityPasswordTF) EditText mPasswordTextField;
 
     //creating a login method to handle anything login related
     public void Login(View view)
@@ -48,12 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity( new Intent( getBaseContext(), MainActivity.class ) );
             }
         });
-
-
-
     }
-
-
+    public void toRegisterActivity(View view){
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,5 @@ public class LoginActivity extends AppCompatActivity {
        mUsernameTextField = (EditText) findViewById(R.id.loginActivityUsernameTF);
         mPasswordTextField = (EditText) findViewById(R.id.loginActivityPasswordTF);
 
-    }
+    }}
 
-}
