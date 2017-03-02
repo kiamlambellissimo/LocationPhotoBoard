@@ -2,10 +2,33 @@ package kiam.locationphotoboard;
 
 import android.Manifest;
 import android.app.Activity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationServices;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,18 +70,22 @@ import com.google.android.gms.maps.model.*;
         private Marker testMarker, testMarker2;
         private TextView mThumbnail;
 
-        @Override
 
-        protected void onCreate(Bundle savedInstanceState) {
+    private static final int FINE_LOCATION_PERMISSION_REQUEST = 1;
+    private static final int CONNECTION_RESOLUTION_REQUEST = 2;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleMap mMap;
+    private Location mLastLocation;
+    private double mLatitudeText;
+    private double mLongitudeText;
+    protected ImageView mImage;
 
-            //Connects to activity_maps.xml
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_maps);
-
-            //creates the space (fragment) that the map will sit in
-            MapFragment mapFragment = (MapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
+    /*
+     * Initialize the Map and its Views are set to INVISIBLE
+     * Generates data for the GoogleAPIClient
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
             mBackground = (TextView) findViewById(R.id.tnbackground);
             mBackground.setVisibility(View.INVISIBLE);
@@ -66,76 +93,80 @@ import com.google.android.gms.maps.model.*;
             mThumbnail = (TextView) findViewById(R.id.thumbnail);
             mThumbnail.setVisibility(View.INVISIBLE);
 
-            // Display Image
-            mImage = (ImageView) findViewById(R.id.mp);
-            mImage.setVisibility(View.INVISIBLE);
+        //Ready up the textView
+        mThumbnail = (TextView) findViewById(R.id.thumbnail);
+        mThumbnail.setVisibility(View.INVISIBLE);
 
+        // Ready up the imageView
+        mImage = (ImageView) findViewById(R.id.mp);
+        mImage.setVisibility(View.INVISIBLE);
 
             buildGoogleAPIClient();
         }
 
-        private void buildGoogleAPIClient() {
-            if (mGoogleApiClient == null) {
-                mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(LocationServices.API)
-                        .build();
-            }
+    //Ready up the Map methods
+    private void buildGoogleAPIClient() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
         }
 
-        @Override
-        public void onMapReady(GoogleMap map) {
-            //instantiapes the map and a test post.
-            mMap = map;
+    /*
+     * When the map is ready to be displayed:
+     *  - listeners are created
+     *  - user's location is accessed
+     */
 
-            //sets the location arbitrarily to sydney
-//        LatLng sydney = new LatLng(-33.867, 151.206);
-//        LatLng sydney2 = new LatLng(-33.860, 151.150);
+    @Override
+    public void onMapReady(GoogleMap map) {
+        //instantiapes the map and a test post.
+        mMap = map;
 
-            try {
-                map.setMyLocationEnabled(true);
-            } catch (SecurityException e) {
-            }
+        //enables user's location to be manipulated by map methods
+        try {
+            map.setMyLocationEnabled(true);
+        } catch (SecurityException e)
+        {
+            Log.d(TAG, "No permissons");
+        }
 
-            //sets the tag object accossiated with the marker to an arbitrary string
-            //checks version of andriod to make sure its >= 19
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            testMarker.setTag(new Post("https://puu.sh/ugScO.png", "fuck this gay earth"));
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            testMarker2.setTag(new Post("https://puu.sh/uiaJv.png", "i really want this hoodie lol"));
-//        }
+        //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
+        mMap.setOnMarkerClickListener(this);
 
-            //sets the on click listener of the map to this class which impliments the onMarkerClickListener class.
-            mMap.setOnMarkerClickListener(this);
-            mMap.setOnMapClickListener(this);
-
-            mImage.setClickable(true);
-
-            mImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Log.i(SystemSettings.APP_TAG + " : " + HomeActivity.class.getName(), "Entered onClick method");
-                    //Toast.makeText(v.getContext(),
-                    //       "The favorite list would appear on clicking this icon",
-                    //      Toast.LENGTH_LONG).show();
-                    switchView(v, temp);
+        //displays text only when the marker is clicked, else it will hide it again
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (mThumbnail.getVisibility() == View.VISIBLE) {
+                    mThumbnail.setVisibility(View.INVISIBLE);
+                    mImage.setVisibility(View.INVISIBLE);
                 }
-            });
+            }
+        });
+    }
+    /*
+    * Get's the marker's properties and set the image and text views VISIBLE once respective fields are obtained
+    * Temporary Post object created to decode the passed Tag
+    */
 
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        //gets the object associated with that marker and turns on the thumbnail
+        if (marker.getTag() != null)
+        {
+            //sets the text part of the thumbnail
+            Post temp = (Post) marker.getTag();
+            mThumbnail.setText(temp.getTextContent());
+            mThumbnail.setVisibility(View.VISIBLE);
+
+            //sets the image part of the thumbnail
+            mImage.setImageBitmap(temp.getImage());
+            mImage.setVisibility(View.VISIBLE);
         }
-
-        private void switchView(View view, Post markerClicked) {
-            Intent i = new Intent(this, viewPostStatActivity.class);
-            startActivity(i);
-        }
-
-
-
-        //excecutes when a marker is clicked. returns that marker.
-        @Override
-        public boolean onMarkerClick(final Marker marker) {
 
             //gets the object associated with that marker and turns on the thumbnail
             if (marker.getTag() != null) {
@@ -160,7 +191,6 @@ import com.google.android.gms.maps.model.*;
 //            mThumbnail.setVisibility(View.INVISIBLE);
 //        }
 
-            return false;
         }
 
         @Override
@@ -184,8 +214,38 @@ import com.google.android.gms.maps.model.*;
                 mLatitudeText = mLastLocation.getLatitude();
                 mLongitudeText = mLastLocation.getLongitude();
                 addTestMarkers(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+    }
+
+    /*
+     * Once the map is connected to Google, permissions are requested and the
+     * map camera pans to the user's current location -- thanks alvis
+     *
+     * Test Markers are created and dropped near the user's current location
+     *  - initialized with random bs properties
+     */
+
+
+        }
+    //REQUIRED TO BE OVERWRITIEN METHODS
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this, "Connection suspended", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(this, CONNECTION_RESOLUTION_REQUEST);
+            } catch (IntentSender.SendIntentException e) {
+                // There was an error with the resolution intent. Try again.
+                mGoogleApiClient.connect();
             }
         }
+    }
+
 
         protected void onStart() {
             mGoogleApiClient.connect();
@@ -198,27 +258,6 @@ import com.google.android.gms.maps.model.*;
             buildGoogleAPIClient();
         }
 
-
-        @Override
-        public void onConnectionSuspended(int i) {
-            Toast.makeText(this, "Connection suspended", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-            if (connectionResult.hasResolution()) {
-                try {
-                    connectionResult.startResolutionForResult(this, CONNECTION_RESOLUTION_REQUEST);
-                } catch (IntentSender.SendIntentException e) {
-                    // There was an error with the resolution intent. Try again.
-                    mGoogleApiClient.connect();
-                }
-            } else {
-                Dialog dialog = GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 1);
-                dialog.show();
-            }
-        }
-
         @Override
         protected void onActivityResult(int requestCode, int resultCode,
                                         Intent data) {
@@ -227,6 +266,13 @@ import com.google.android.gms.maps.model.*;
                 mGoogleApiClient.connect();
             }
         }
+
+    /*
+     * Creates test Marker objects filled with random stuff
+     *   - the Post object associated with the Marker is created within the setting of the tag
+     *   - TODO: this works for now but is subject to change upon backendless integration
+     */
+
 
         @Override
         public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

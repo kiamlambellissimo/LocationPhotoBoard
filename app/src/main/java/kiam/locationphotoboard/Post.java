@@ -114,6 +114,7 @@ public class Post
     public void testImage(String i)
     {
         //TODO: Check if the image is the proper file format
+        //A new thread must be created to gather stuff from a URL
         new Thread(new Runnable() {
             @Override
             public void run() {
