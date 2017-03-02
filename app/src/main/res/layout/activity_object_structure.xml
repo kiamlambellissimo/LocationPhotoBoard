@@ -104,19 +104,5 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:maxLines="4"
-<<<<<<< HEAD
         android:lines="4"/>
-=======
-        android:lines="4"
-        android:id="@+id/comments"
-        android:layout_below="@+id/postcomment"
-        android:layout_alignRight="@+id/addtotext"
-        android:layout_alignEnd="@+id/addtotext"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp" />
->>>>>>> origin/LoginBranch
-
-
-
-
 </RelativeLayout>

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">LocationPhotoBoard</string>
-<<<<<<< HEAD
     <string name="google_map_api_key">AIzaSyCxyz9OZUp7uYHMtiWiSnGQy_Mf-7iEA-I</string>
     <string name="title_activity_view_post">viewPostActivity</string>
     <string name="large_text">
@@ -93,7 +92,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-=======
     <string name="title_activity_register">Register</string>
 
     <!-- Strings related to login -->
@@ -108,5 +106,4 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
->>>>>>> origin/LoginBranch
 </resources>

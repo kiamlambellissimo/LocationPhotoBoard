@@ -121,7 +121,6 @@ public class ObjectStructureActivity extends AppCompatActivity {
                     } else {
                         theRating.setText(theRating.getText()); //sets the same changed rating if they press it more than once
                     }
-<<<<<<< HEAD
                 }
             }
         });
